@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(robot_rbvogui_common)
+project(robot_rbvogui_base)
 
 find_package(ament_cmake REQUIRED)
 
@@ -10,7 +10,7 @@ install(
   PATTERN "*.pyc" EXCLUDE)
 
 install(
-  PROGRAMS scripts/debug_model_base.sh
+  PROGRAMS scripts/debug_robot_rbvogui_base.sh
   DESTINATION share/${PROJECT_NAME}/scripts)
 
 install(FILES README.md LICENSE DESTINATION share/${PROJECT_NAME})

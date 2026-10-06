@@ -86,9 +86,7 @@ def test_bridge_uses_shared_battery_bridge_configuration(monkeypatch: pytest.Mon
 
 def _load_bridge_launch_module() -> ModuleType:
     module_path = PACKAGE_DIR / 'launch' / 'bridge.launch.py'
-    spec = importlib.util.spec_from_file_location(
-        'robot_rbvogui_common_bridge_launch', module_path
-    )
+    spec = importlib.util.spec_from_file_location('robot_rbvogui_base_bridge_launch', module_path)
 
     assert spec is not None
     assert spec.loader is not None

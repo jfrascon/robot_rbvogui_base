@@ -11,8 +11,8 @@ from conftest import PACKAGE_DIR
 
 
 def _load_launch_module() -> ModuleType:
-    path = PACKAGE_DIR / 'launch' / 'debug_model_base.launch.py'
-    spec = importlib.util.spec_from_file_location('robot_rbvogui_common_debug_launch', path)
+    path = PACKAGE_DIR / 'launch' / 'debug_robot_rbvogui_base.launch.py'
+    spec = importlib.util.spec_from_file_location('robot_rbvogui_base_debug_launch', path)
     assert spec is not None
     assert spec.loader is not None
 
@@ -61,7 +61,7 @@ def test_robot_urdf_temp_file_uses_flattened_namespace(monkeypatch: pytest.Monke
 
 
 def test_debug_spawn_reads_rendered_urdf_file() -> None:
-    source = PACKAGE_DIR.joinpath('launch', 'debug_model_base.launch.py').read_text(
+    source = PACKAGE_DIR.joinpath('launch', 'debug_robot_rbvogui_base.launch.py').read_text(
         encoding='utf-8'
     )
 
@@ -72,10 +72,10 @@ def test_debug_spawn_reads_rendered_urdf_file() -> None:
 
 
 def test_debug_identity_matches_script_and_rviz_configuration() -> None:
-    launch_source = PACKAGE_DIR.joinpath('launch', 'debug_model_base.launch.py').read_text(
+    launch_source = PACKAGE_DIR.joinpath('launch', 'debug_robot_rbvogui_base.launch.py').read_text(
         encoding='utf-8'
     )
-    script_source = PACKAGE_DIR.joinpath('scripts', 'debug_model_base.sh').read_text(
+    script_source = PACKAGE_DIR.joinpath('scripts', 'debug_robot_rbvogui_base.sh').read_text(
         encoding='utf-8'
     )
     rviz_source = PACKAGE_DIR.joinpath('rviz', 'sim_debug.rviz').read_text(encoding='utf-8')
@@ -86,7 +86,7 @@ def test_debug_identity_matches_script_and_rviz_configuration() -> None:
 
 
 def test_debug_waits_for_world_service_before_spawning_model() -> None:
-    source = PACKAGE_DIR.joinpath('launch', 'debug_model_base.launch.py').read_text(
+    source = PACKAGE_DIR.joinpath('launch', 'debug_robot_rbvogui_base.launch.py').read_text(
         encoding='utf-8'
     )
 

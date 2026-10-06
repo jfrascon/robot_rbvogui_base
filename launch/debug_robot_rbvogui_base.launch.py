@@ -59,28 +59,28 @@ def generate_launch_description() -> LaunchDescription:
         DeclareLaunchArgument(
             'robot_xacro_args_file',
             default_value=PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'config', 'default_xacro_args.yaml']
+                [FindPackageShare('robot_rbvogui_base'), 'config', 'default_xacro_args.yaml']
             ),
             description='YAML file with model-description xacro arguments.',
         ),
         DeclareLaunchArgument(
             'robot_sim_file',
             default_value=PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'config', 'default_simulation.yaml']
+                [FindPackageShare('robot_rbvogui_base'), 'config', 'default_simulation.yaml']
             ),
             description='Simulation YAML used while generating the robot description.',
         ),
         DeclareLaunchArgument(
             'robot_bridge_config_file',
             default_value=PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'config', 'default_bridge.yaml']
+                [FindPackageShare('robot_rbvogui_base'), 'config', 'default_bridge.yaml']
             ),
             description='ROS-Gazebo bridge configuration for this model.',
         ),
         DeclareLaunchArgument(
             'robot_params_file',
             default_value=PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'config', 'default_params.yaml']
+                [FindPackageShare('robot_rbvogui_base'), 'config', 'default_params.yaml']
             ),
             description='Complete robot parameter YAML file.',
         ),
@@ -178,7 +178,7 @@ def _launch_actions_after_world_ready(
     """Create the model only after the Gazebo world advertises its create service."""
     if event.returncode != 0:
         reason = f'Gazebo world readiness check failed with return code {event.returncode}.'
-        get_logger('robot_rbvogui_common').error(reason)
+        get_logger('robot_rbvogui_base').error(reason)
         return [EmitEvent(event=Shutdown(reason=reason))]
 
     robot_name = LaunchConfiguration('robot_name').perform(ctx)
@@ -239,7 +239,7 @@ def _include_bridge() -> IncludeLaunchDescription:
     return IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'launch', 'bridge.launch.py']
+                [FindPackageShare('robot_rbvogui_base'), 'launch', 'bridge.launch.py']
             )
         ),
         launch_arguments={
@@ -260,7 +260,7 @@ def _include_kinematics() -> IncludeLaunchDescription:
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
                 [
-                    FindPackageShare('robot_rbvogui_common'),
+                    FindPackageShare('robot_rbvogui_base'),
                     'launch',
                     'ground_vehicle_kinematics.launch.py',
                 ]
@@ -282,14 +282,14 @@ def _include_render_robot_urdf() -> IncludeLaunchDescription:
     return IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'launch', 'render_robot_urdf.launch.py']
+                [FindPackageShare('robot_rbvogui_base'), 'launch', 'render_robot_urdf.launch.py']
             )
         ),
         launch_arguments={
             'namespace': LaunchConfiguration('namespace'),
             'robot_name': LaunchConfiguration('robot_name'),
             'robot_xacro_file': PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'urdf', 'model_base.xacro']
+                [FindPackageShare('robot_rbvogui_base'), 'urdf', 'robot_rbvogui_base.xacro']
             ),
             'robot_xacro_args_file': LaunchConfiguration('robot_xacro_args_file'),
             'robot_sim_file': LaunchConfiguration('robot_sim_file'),
@@ -304,7 +304,7 @@ def _include_robot_state_publisher() -> IncludeLaunchDescription:
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
                 [
-                    FindPackageShare('robot_rbvogui_common'),
+                    FindPackageShare('robot_rbvogui_base'),
                     'launch',
                     'robot_state_publisher.launch.py',
                 ]
@@ -339,11 +339,11 @@ def _include_spawn_world() -> IncludeLaunchDescription:
             'gzgui_enabled': LaunchConfiguration('gzgui_enabled'),
             'gzgui_config_file': '',
             'world_sdf_file': PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'worlds', 'debug_world.sdf']
+                [FindPackageShare('robot_rbvogui_base'), 'worlds', 'debug_world.sdf']
             ),
             'world_sdf_string': '',
             'world_bridge_config_file': PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'worlds', 'debug_world_bridge.yaml']
+                [FindPackageShare('robot_rbvogui_base'), 'worlds', 'debug_world_bridge.yaml']
             ),
             'world_bridge_name': 'world_bridge',
             'world_bridge_subscription_heartbeat': '1000',
@@ -362,7 +362,7 @@ def _launch_actions_after_model_ready(
     """Start model-dependent processes only after Gazebo finishes spawning the robot."""
     if event.returncode != 0:
         reason = f'Gazebo model spawn failed with return code {event.returncode}.'
-        get_logger('robot_rbvogui_common').error(reason)
+        get_logger('robot_rbvogui_base').error(reason)
         return [EmitEvent(event=Shutdown(reason=reason))]
 
     return [
@@ -383,7 +383,7 @@ def _launch_rviz() -> Node:
         arguments=[
             '-d',
             PathJoinSubstitution(
-                [FindPackageShare('robot_rbvogui_common'), 'rviz', 'sim_debug.rviz']
+                [FindPackageShare('robot_rbvogui_base'), 'rviz', 'sim_debug.rviz']
             ),
         ],
         output='both',

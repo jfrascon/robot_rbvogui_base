@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-package_share="$(ros2 pkg prefix robot_rbvogui_common)/share/robot_rbvogui_common"
+package_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
 
 # The launch logs a persistent /tmp URDF path after rendering the base Xacro.
 # The launch arguments below are defaults passed explicitly by this script.
 # To override any of them, append the replacement argument after the script name.
 # Example:
-#   debug_model_base.sh rviz_enabled:=False gzgui_enabled:=False
-ros2 launch robot_rbvogui_common debug_model_base.launch.py \
+#   debug_robot_rbvogui_base.sh rviz_enabled:=False gzgui_enabled:=False
+ros2 launch robot_rbvogui_base debug_robot_rbvogui_base.launch.py \
     robot_name:=rbv0 \
     robot_params_file:="${package_share}/config/default_params.yaml" \
     robot_params_file_allow_substs:=True \

@@ -5,7 +5,7 @@ from conftest import run_bash
 
 
 def test_debug_script_is_executable_and_has_valid_bash_syntax() -> None:
-    script_path = PACKAGE_DIR / 'scripts' / 'debug_model_base.sh'
+    script_path = PACKAGE_DIR / 'scripts' / 'debug_robot_rbvogui_base.sh'
 
     assert os.access(script_path, os.X_OK)
 

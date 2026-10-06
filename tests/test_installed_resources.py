@@ -14,12 +14,12 @@ EXPECTED_RESOURCES = (
     'launch/bridge.launch.py',
     'launch/ground_vehicle_kinematics.launch.py',
     'launch/robot_state_publisher.launch.py',
-    'launch/debug_model_base.launch.py',
+    'launch/debug_robot_rbvogui_base.launch.py',
     'launch/render_robot_urdf.launch.py',
     'rviz/sim_debug.rviz',
-    'scripts/debug_model_base.sh',
+    'scripts/debug_robot_rbvogui_base.sh',
     'urdf/common.xacro',
-    'urdf/model_base.xacro',
+    'urdf/robot_rbvogui_base.xacro',
     'worlds/debug_world.sdf',
     'worlds/debug_world_bridge.yaml',
 )
@@ -44,7 +44,7 @@ REMOVED_RESOURCES = (
 
 @pytest.fixture(scope='module')
 def package_share() -> Path:
-    return Path(get_package_share_directory('robot_rbvogui_common'))
+    return Path(get_package_share_directory('robot_rbvogui_base'))
 
 
 @pytest.mark.parametrize('relative_path', EXPECTED_RESOURCES)
@@ -57,6 +57,6 @@ def test_removed_resource_is_not_installed(package_share: Path, relative_path: s
     assert not package_share.joinpath(relative_path).exists()
 
 
-@pytest.mark.parametrize('relative_path', ['scripts/debug_model_base.sh'])
+@pytest.mark.parametrize('relative_path', ['scripts/debug_robot_rbvogui_base.sh'])
 def test_installed_debug_script_is_executable(package_share: Path, relative_path: str) -> None:
     assert os.access(package_share / relative_path, os.X_OK)

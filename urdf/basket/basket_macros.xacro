@@ -7,17 +7,17 @@ S means string
   <xacro:include filename="$(find robotics_description)/urdf/common/all_commons.xacro"/>
 
   <xacro:property name="basket_chassis_visual_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_container.obj"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_container.obj"/>
   <xacro:property name="basket_chassis_collision_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_container.stl"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_container.stl"/>
   <xacro:property name="basket_chassis_closed_visual_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_container.obj"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_container.obj"/>
   <xacro:property name="basket_chassis_closed_collision_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_container.stl"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_container.stl"/>
   <xacro:property name="basket_sensors_visual_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_sensors.obj"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_sensors.obj"/>
   <xacro:property name="basket_sensors_collision_mesh"
-                  value="robot_rbvogui_common/meshes/basket/basket_sensors.stl"/>
+                  value="robot_rbvogui_base/meshes/basket/basket_sensors.stl"/>
 
   <!--
   Macro for the basket chassis.

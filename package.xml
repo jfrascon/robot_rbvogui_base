@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <package format="3">
-  <name>robot_rbvogui_common</name>
+  <name>robot_rbvogui_base</name>
   <version>1.0.0</version>
   <description>
-    Common robot descriptions, launch files, and deployment configuration for the RB-VOGUI robot
-    family
+    Robot descriptions, launch files, and deployment configuration for the RB-VOGUI base
   </description>
   <maintainer email="jfrascon@gmail.com">Juan Francisco Rascon Crespo</maintainer>
   <license>Apache-2.0</license>

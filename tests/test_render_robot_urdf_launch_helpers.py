@@ -11,7 +11,7 @@ from conftest import PACKAGE_DIR
 
 def _load_launch_module() -> ModuleType:
     path = PACKAGE_DIR / 'launch' / 'render_robot_urdf.launch.py'
-    spec = importlib.util.spec_from_file_location('robot_rbvogui_common_render_urdf_launch', path)
+    spec = importlib.util.spec_from_file_location('robot_rbvogui_base_render_urdf_launch', path)
     assert spec is not None
     assert spec.loader is not None
 
@@ -22,7 +22,7 @@ def _load_launch_module() -> ModuleType:
 
 def test_build_xacro_command_accepts_file_uri_for_optional_arguments() -> None:
     module = _load_launch_module()
-    xacro_file = PACKAGE_DIR / 'urdf' / 'model_base.xacro'
+    xacro_file = PACKAGE_DIR / 'urdf' / 'robot_rbvogui_base.xacro'
     xacro_args_file = PACKAGE_DIR / 'config' / 'default_xacro_args.yaml'
 
     command = module._build_xacro_command(str(xacro_file), xacro_args_file.as_uri(), '')
@@ -41,7 +41,7 @@ def test_quote_shell_token_uses_shell_quoting_when_needed() -> None:
 
 def test_build_xacro_command_quotes_paths_and_complete_yaml_assignments(tmp_path: Path) -> None:
     module = _load_launch_module()
-    xacro_file = tmp_path / 'model files' / 'model_base.xacro'
+    xacro_file = tmp_path / 'model files' / 'robot_rbvogui_base.xacro'
     xacro_args_file = tmp_path / 'model args.yaml'
     xacro_file.parent.mkdir()
     xacro_file.touch()

@@ -1,8 +1,8 @@
-# robot_rbvogui_common
+# robot_rbvogui_base
 
-`robot_rbvogui_common` represents the RB-VOGUI robot base model. Although the base on its own may have limited practical use, this package provides the common foundation that other more fully equipped RB-VOGUI robot models use as a dependency.
+`robot_rbvogui_base` represents the RB-VOGUI robot base model. Although the base on its own may have limited practical use, this package provides the common foundation that other more fully equipped RB-VOGUI robot models use as a dependency.
 
-![RB-VOGUI common base model](doc/images/robot_rbvogui_common.png)
+![RB-VOGUI base model](doc/images/robot_rbvogui_base.png)
 
 > **Note:** The figure does not show every frame included in the base model.
 
@@ -48,13 +48,13 @@ Each derived model provides the parameter file that configures the nodes started
 
 ## Installation
 
-`robot_rbvogui_common` depends on ROS 2 packages available from the APT package repositories. Install those dependencies with `rosdep`. It also depends on packages that are not available from APT. Their source repositories are listed in [`deps.repos`](deps.repos).
+`robot_rbvogui_base` depends on ROS 2 packages available from the APT package repositories. Install those dependencies with `rosdep`. It also depends on packages that are not available from APT. Their source repositories are listed in [`deps.repos`](deps.repos).
 
 ```bash
 export WORKSPACE=<path-to-your-workspace>
 mkdir -p "${WORKSPACE}"
-git clone https://github.com/jfrascon/robot_rbvogui_common.git "${WORKSPACE}/robot_rbvogui_common"
-vcs import "${WORKSPACE}" < "${WORKSPACE}/robot_rbvogui_common/deps.repos"
+git clone https://github.com/jfrascon/robot_rbvogui_base.git "${WORKSPACE}/robot_rbvogui_base"
+vcs import "${WORKSPACE}" < "${WORKSPACE}/robot_rbvogui_base/deps.repos"
 source /opt/ros/jazzy/setup.bash
 rosdep install --from-paths "${WORKSPACE}" --ignore-src -r -y
 ```
@@ -65,7 +65,7 @@ Build the package from the workspace root:
 
 ```bash
 cd "${WORKSPACE}"
-colcon build --merge-install --packages-select robot_rbvogui_common
+colcon build --merge-install --packages-select robot_rbvogui_base
 source install/setup.bash
 ```
 
@@ -76,26 +76,26 @@ The package includes a launch file and supporting resources to visualize the bas
 The debug launch file is useful for quickly checking that the model still works after a change and for testing newly added sensors.
 
 ```bash
-robot_rbvogui_common_share="$(ros2 pkg prefix robot_rbvogui_common)/share/robot_rbvogui_common"
-"${robot_rbvogui_common_share}/scripts/debug_model_base.sh"
+robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
+"${robot_rbvogui_base_share}/scripts/debug_robot_rbvogui_base.sh"
 ```
 
-You can pass the script any argument accepted by `debug_model_base.launch.py`. To see the available arguments, run:
+You can pass the script any argument accepted by `debug_robot_rbvogui_base.launch.py`. To see the available arguments, run:
 
 ```bash
-ros2 launch robot_rbvogui_common debug_model_base.launch.py --show-args
+ros2 launch robot_rbvogui_base debug_robot_rbvogui_base.launch.py --show-args
 ```
 
 For example, run the simulation without the Gazebo GUI or RViz:
 
 ```bash
-robot_rbvogui_common_share="$(ros2 pkg prefix robot_rbvogui_common)/share/robot_rbvogui_common"
-"${robot_rbvogui_common_share}/scripts/debug_model_base.sh" \
+robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
+"${robot_rbvogui_base_share}/scripts/debug_robot_rbvogui_base.sh" \
   rviz_enabled:=False \
   gzgui_enabled:=False
 ```
 
-![RB-VOGUI common base debug simulation](doc/images/robot_rbvogui_common_debug.png)
+![RB-VOGUI base debug simulation](doc/images/robot_rbvogui_base_debug.png)
 
 > This image shows the base model simulation with the default values.
 
@@ -105,8 +105,8 @@ Build and run the package tests from the workspace root:
 
 ```bash
 cd "${WORKSPACE}"
-colcon build --merge-install --packages-select robot_rbvogui_common
-colcon test --merge-install --packages-select robot_rbvogui_common
+colcon build --merge-install --packages-select robot_rbvogui_base
+colcon test --merge-install --packages-select robot_rbvogui_base
 colcon test-result --test-result-base build --verbose
 ```
 
@@ -115,19 +115,19 @@ colcon test-result --test-result-base build --verbose
 You can also render the base model and validate the resulting URDF directly with `check_urdf`:
 
 ```bash
-robot_rbvogui_common_share="$(ros2 pkg prefix robot_rbvogui_common)/share/robot_rbvogui_common"
-ros2 launch robot_rbvogui_common render_robot_urdf.launch.py \
+robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
+ros2 launch robot_rbvogui_base render_robot_urdf.launch.py \
   robot_name:=rbv0 \
-  robot_xacro_file:="${robot_rbvogui_common_share}/urdf/model_base.xacro" \
-  robot_xacro_args_file:="${robot_rbvogui_common_share}/config/default_xacro_args.yaml" \
-  robot_sim_file:="${robot_rbvogui_common_share}/config/default_simulation.yaml" \
+  robot_xacro_file:="${robot_rbvogui_base_share}/urdf/robot_rbvogui_base.xacro" \
+  robot_xacro_args_file:="${robot_rbvogui_base_share}/config/default_xacro_args.yaml" \
+  robot_sim_file:="${robot_rbvogui_base_share}/config/default_simulation.yaml" \
   robot_urdf_file:=/tmp/rbvogui_base.urdf
 check_urdf /tmp/rbvogui_base.urdf
 ```
 
 ## Derived model examples
 
-The following packages build on `robot_rbvogui_common`:
+The following packages build on `robot_rbvogui_base`:
 
-- [robot_rbvogui_basket_layout_a](https://github.com/jfrascon/robot_rbvogui_basket_layout_a.git)
+- [robot_rbvogui_basket_a](https://github.com/jfrascon/robot_rbvogui_basket_a.git)
 - [robot_rbvogui_forklift](https://github.com/jfrascon/robot_rbvogui_forklift.git)

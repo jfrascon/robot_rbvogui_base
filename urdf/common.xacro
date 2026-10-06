@@ -2,8 +2,9 @@
 <robot name="rbvogui_common" xmlns:xacro="http://www.ros.org/wiki/xacro">
   <!--
   Shared RB-VOGUI mobile-base Xacro for four steerable wheels.
-  This file is not a complete robot model. Entry-point Xacros such as model_base.xacro and
-  model_forklift.xacro include it, then add their own links, sensors, actuators, and Gazebo plugins.
+  This file is not a complete robot model. Entry-point Xacros such as
+  robot_rbvogui_base.xacro and robot_rbvogui_forklift.xacro include it, then add their own links,
+  sensors, actuators, and Gazebo plugins.
 
   The base is composed of the RB-VOGUI chassis, battery and four steerable wheels:
   - Front-left wheel uses angle +alpha.
@@ -112,9 +113,9 @@
   <xacro:property name="chassis_joint_origin"   value="-0.012 0 0.1775 0 0 0"/>
   <xacro:property name="battery_joint_origin"   value="0.02952 0 0 0 0 0"/>
   <xacro:property name="body_mesh_scale"        value="1.0 1.0 1.0"/>
-  <xacro:property name="chassis_visual_mesh"    value="robot_rbvogui_common/meshes/rbvogui_chassis.dae"/>
-  <xacro:property name="chassis_collision_mesh" value="robot_rbvogui_common/meshes/rbvogui_chassis.stl"/>
-  <xacro:property name="battery_mesh"           value="robot_rbvogui_common/meshes/rbvogui_battery.stl"/>
+  <xacro:property name="chassis_visual_mesh"    value="robot_rbvogui_base/meshes/rbvogui_chassis.dae"/>
+  <xacro:property name="chassis_collision_mesh" value="robot_rbvogui_base/meshes/rbvogui_chassis.stl"/>
+  <xacro:property name="battery_mesh"           value="robot_rbvogui_base/meshes/rbvogui_battery.stl"/>
   <xacro:property name="battery_color"
                   value="${robot_prefix}battery_color 0.08235 0.08235 0.08235 1.0"/>
 

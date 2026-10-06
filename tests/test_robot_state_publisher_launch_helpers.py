@@ -12,7 +12,7 @@ from conftest import PACKAGE_DIR
 def _load_launch_module() -> ModuleType:
     path = PACKAGE_DIR / 'launch' / 'robot_state_publisher.launch.py'
     spec = importlib.util.spec_from_file_location(
-        'robot_rbvogui_common_robot_state_publisher_launch', path
+        'robot_rbvogui_base_robot_state_publisher_launch', path
     )
     assert spec is not None
     assert spec.loader is not None
