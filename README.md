@@ -61,12 +61,23 @@ rosdep install --from-paths "${WORKSPACE}" --ignore-src -r -y
 
 ## Build
 
-Build the package from the workspace root:
+Build the package and its workspace dependencies from the workspace root:
 
 ```bash
 cd "${WORKSPACE}"
-colcon build --merge-install --packages-select robot_rbvogui_base
+colcon build --merge-install --packages-up-to robot_rbvogui_base
 source install/setup.bash
+```
+
+## Tests
+
+Build and run the tests for this package and its workspace dependencies from the workspace root.
+
+```bash
+cd "${WORKSPACE}"
+colcon build --merge-install --packages-up-to robot_rbvogui_base
+colcon test --merge-install --packages-up-to robot_rbvogui_base
+colcon test-result --test-result-base build --verbose
 ```
 
 ## Visualize the base model
@@ -76,8 +87,7 @@ The package includes a launch file and supporting resources to visualize the bas
 The debug launch file is useful for quickly checking that the model still works after a change and for testing newly added sensors.
 
 ```bash
-robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
-"${robot_rbvogui_base_share}/scripts/debug_robot_rbvogui_base.sh"
+"${WORKSPACE}/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh"
 ```
 
 You can pass the script any argument accepted by `debug_robot_rbvogui_base.launch.py`. To see the available arguments, run:
@@ -89,8 +99,7 @@ ros2 launch robot_rbvogui_base debug_robot_rbvogui_base.launch.py --show-args
 For example, run the simulation without the Gazebo GUI or RViz:
 
 ```bash
-robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
-"${robot_rbvogui_base_share}/scripts/debug_robot_rbvogui_base.sh" \
+"${WORKSPACE}/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh" \
   rviz_enabled:=False \
   gzgui_enabled:=False
 ```
@@ -99,28 +108,16 @@ robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvo
 
 > This image shows the base model simulation with the default values.
 
-## Tests
-
-Build and run the package tests from the workspace root:
-
-```bash
-cd "${WORKSPACE}"
-colcon build --merge-install --packages-select robot_rbvogui_base
-colcon test --merge-install --packages-select robot_rbvogui_base
-colcon test-result --test-result-base build --verbose
-```
-
-### Inspect the generated URDF
+## Inspect the generated URDF
 
 You can also render the base model and validate the resulting URDF directly with `check_urdf`:
 
 ```bash
-robot_rbvogui_base_share="$(ros2 pkg prefix robot_rbvogui_base)/share/robot_rbvogui_base"
 ros2 launch robot_rbvogui_base render_robot_urdf.launch.py \
   robot_name:=rbv0 \
-  robot_xacro_file:="${robot_rbvogui_base_share}/urdf/robot_rbvogui_base.xacro" \
-  robot_xacro_args_file:="${robot_rbvogui_base_share}/config/default_xacro_args.yaml" \
-  robot_sim_file:="${robot_rbvogui_base_share}/config/default_simulation.yaml" \
+  robot_xacro_file:="${WORKSPACE}/robot_rbvogui_base/urdf/robot_rbvogui_base.xacro" \
+  robot_xacro_args_file:="${WORKSPACE}/robot_rbvogui_base/config/default_xacro_args.yaml" \
+  robot_sim_file:="${WORKSPACE}/robot_rbvogui_base/config/default_simulation.yaml" \
   robot_urdf_file:=/tmp/rbvogui_base.urdf
 check_urdf /tmp/rbvogui_base.urdf
 ```
