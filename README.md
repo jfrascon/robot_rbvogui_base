@@ -51,12 +51,12 @@ Each derived model provides the parameter file that configures the nodes started
 `robot_rbvogui_base` depends on ROS 2 packages available from the APT package repositories. Install those dependencies with `rosdep`. It also depends on packages that are not available from APT. Their source repositories are listed in [`deps.repos`](deps.repos).
 
 ```bash
-export WORKSPACE=<path-to-your-workspace>
-mkdir -p "${WORKSPACE}"
-git clone https://github.com/jfrascon/robot_rbvogui_base.git "${WORKSPACE}/robot_rbvogui_base"
-vcs import "${WORKSPACE}" < "${WORKSPACE}/robot_rbvogui_base/deps.repos"
+export WORKSPACE="/path/to/your/workspace"
+mkdir -p "${WORKSPACE}/src"
+git clone https://github.com/jfrascon/robot_rbvogui_base.git "${WORKSPACE}/src/robot_rbvogui_base"
+vcs import "${WORKSPACE}/src" < "${WORKSPACE}/src/robot_rbvogui_base/deps.repos"
 source /opt/ros/jazzy/setup.bash
-rosdep install --from-paths "${WORKSPACE}" --ignore-src -r -y
+rosdep install --from-paths "${WORKSPACE}/src" --ignore-src -r -y
 ```
 
 ## Build
@@ -87,7 +87,7 @@ The package includes a launch file and supporting resources to visualize the bas
 The debug launch file is useful for quickly checking that the model still works after a change and for testing newly added sensors.
 
 ```bash
-"${WORKSPACE}/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh"
+"${WORKSPACE}/src/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh"
 ```
 
 You can pass the script any argument accepted by `debug_robot_rbvogui_base.launch.py`. To see the available arguments, run:
@@ -99,7 +99,7 @@ ros2 launch robot_rbvogui_base debug_robot_rbvogui_base.launch.py --show-args
 For example, run the simulation without the Gazebo GUI or RViz:
 
 ```bash
-"${WORKSPACE}/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh" \
+"${WORKSPACE}/src/robot_rbvogui_base/scripts/debug_robot_rbvogui_base.sh" \
   rviz_enabled:=False \
   gzgui_enabled:=False
 ```
@@ -115,9 +115,9 @@ You can also render the base model and validate the resulting URDF directly with
 ```bash
 ros2 launch robot_rbvogui_base render_robot_urdf.launch.py \
   robot_name:=rbv0 \
-  robot_xacro_file:="${WORKSPACE}/robot_rbvogui_base/urdf/robot_rbvogui_base.xacro" \
-  robot_xacro_args_file:="${WORKSPACE}/robot_rbvogui_base/config/default_xacro_args.yaml" \
-  robot_sim_file:="${WORKSPACE}/robot_rbvogui_base/config/default_simulation.yaml" \
+  robot_xacro_file:="${WORKSPACE}/src/robot_rbvogui_base/urdf/robot_rbvogui_base.xacro" \
+  robot_xacro_args_file:="${WORKSPACE}/src/robot_rbvogui_base/config/default_xacro_args.yaml" \
+  robot_sim_file:="${WORKSPACE}/src/robot_rbvogui_base/config/default_simulation.yaml" \
   robot_urdf_file:=/tmp/rbvogui_base.urdf
 check_urdf /tmp/rbvogui_base.urdf
 ```
